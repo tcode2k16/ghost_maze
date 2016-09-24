@@ -39,18 +39,18 @@
     var canvas, ctx;
     var
             block_width = WIDTH /3,
-            block_height = HEIGHT /3,
+            block_height = WIDTH /3,
             mazes = [
-                ["0000000000011120021000100111000011020110011010010000111111000000009000",10,7],
-                ["00000000000000000000011111101100111111100010000010000001000000111111100000110000011000000011111011000011111111100000100000000000001111111000001111011110000011100110001100000000100000111110111111111000000000111000000011000111111010110000011000100011111011110000001110000011100111100000100000001111001000000000000000000090",20,16],
-            ],
+                        ["0000000000011120021000100111000011020110011010010000111111000000009000",10,7],
+                        ["00000000000000000000011111101100111111100010000010000001000000111111100000110000011000000011111011000011111111100000100000000000001111111000001111011110000011100110001100000000100000111110111111111000000000111000000011000111111010110000011000100011111011110000001110000011100111100000100000001111001000000000000000000090",20,16],
+                    ],
             map,map_width=mazes[0][1],map_height= mazes[0][2],level = 1,GameOver=false,
             main_maze = mazes[0][0],
             player_point = 12,
 
             torch = false,
 
-            wall="#993300",road="#FFCC99",player="#FF9966",monster="#52CC52",
+            wall="#993300",road="#FFCC99",player="#FF9966",monster="#52CC52",img_src,
             player_life=20,gold= 0,player_strength= 5,player_temp_strength= 0,Miss=false,Quit=false,Fight=false,
             monster_life= 0,monster_strength= 0,monster_temp_strength= 0,
             player_view_lsit = [];
@@ -63,12 +63,12 @@
         },
         draw: function () {
             for (var i = 0; i < 3; i++) for (var j = 0; j < 3; j++) {
-                if (main_maze[player_view_lsit[j][i]] == "1") ctx.fillStyle = road;
-                if (main_maze[player_view_lsit[j][i]] == "0") ctx.fillStyle = wall;
-                if (main_maze[player_view_lsit[j][i]] == "2") ctx.fillStyle = monster;
-                if (player_view_lsit[j][i] == player_point) ctx.fillStyle = player;
-                ctx.fillRect(i*block_width,j*block_height,block_width,block_height);
-                ctx.fillStyle = "#F00";
+                if (main_maze[player_view_lsit[j][i]] == "1") img_src = Road;
+                if (main_maze[player_view_lsit[j][i]] == "0") img_src = Wall;
+                if (main_maze[player_view_lsit[j][i]] == "2") img_src = Monster;
+                if (main_maze[player_view_lsit[j][i]] == "9") img_src = Exit;
+                if (player_view_lsit[j][i] == player_point) img_src = Player;
+                ctx.drawImage(img_src,i*block_width,j*block_height,block_width,block_height);
             }
         },
         update: function () {
@@ -117,8 +117,8 @@
             }
 
             keyListener(evt,"9",function(){
-                alert("you won");
-                map.level_up();
+                    alert("you won");
+                    map.level_up();
             });
 
             keyListener(evt,"2",function(){
@@ -215,7 +215,7 @@
     }
     function draw() {
         map.draw();
-//        console.log(main_maze);
+//        x
 //        console.log(main_maze.length);
 //        ctx.drawImage(Wall,0,0);
     }
